@@ -1,0 +1,28 @@
+﻿@model List<Library.ViewModels.BookVM>
+
+@{
+    ViewBag.Title = "title";
+    Layout = "_Layout";
+}
+
+<table class="table">
+   <thead>
+       <tr>
+         <th>#</th>
+         <th>Title</th>
+         <th>Author</th>
+       </tr>
+     </thead>
+   <tbody>
+   @{ int i = 0;}
+   @foreach (var b in Model)
+   {
+     i++;
+     <tr>
+       <th>@i</th>
+       <td>@b.Title</td>
+       <td>@b.Author</td>
+     </tr>
+   }
+   </tbody>
+</table>
