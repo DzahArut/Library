@@ -1,6 +1,8 @@
-﻿﻿using System.Collections.Generic;
+﻿﻿using System;
+ using System.Collections.Generic;
  using System.Linq;
  using Library.Data;
+ using Library.Models;
  using Library.ViewModels;
 
  namespace Library.Controllers.Helpers
@@ -24,6 +26,7 @@
                 {
                     booksVM.Add(new BookVM
                     {
+                        Id = b.Id,
                         Title = b.Title,
                         Author = author.Surname + " " + author.Name + " " + author.Patronymic
                     });
@@ -39,24 +42,105 @@
             return booksVM;
         }
 
-        public CreateBookVM CreateBookVM()
+        public CreateBookVM GetCreateBookVM()
         {
-            throw new System.NotImplementedException();
+            var authors = _context.Authors.ToList();
+            var authorsVM = new List<AuthorVM>();
+            foreach (var a in authors)
+            {
+                authorsVM.Add(new AuthorVM
+                {
+                    Name = a.Name,
+                    Surname = a.Surname,
+                    Patronymic = a.Patronymic,
+                    Id = a.Id
+                });
+            }
+            return new CreateBookVM
+            {
+                AuthorId = 0,
+                Title = "",
+                Authors = authorsVM
+            };
+        }
+        
+        public EditBookVM GetEditBookVM(int id)
+        {
+            var authors = _context.Authors.ToList();
+            var authorsVM = new List<AuthorVM>();
+            foreach (var a in authors)
+            {
+                authorsVM.Add(new AuthorVM
+                {
+                    Name = a.Name,
+                    Surname = a.Surname,
+                    Patronymic = a.Patronymic,
+                    Id = a.Id
+                });
+            }
+
+            var book = _context.Books.Find(id);
+            return new EditBookVM()
+            {
+                Id = book.Id,
+                AuthorId = book.AuthorId,
+                Title = book.Title,
+                Authors = authorsVM
+            };
         }
 
-        public void Create(BookVM bookVM)
+        public void Create(CreateBookVM bookVM)
         {
-            throw new System.NotImplementedException();
+            var book = new Book
+            {
+                Title = bookVM.Title,
+                AuthorId = bookVM.AuthorId
+            };
+            try
+            {
+                _context.Books.Add(book);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("******* " + e.Message + " *******");
+                _context.Books.Remove(book);
+                throw;
+            }
         }
+
+       
 
         public void Edit(EditBookVM editBookVm)
         {
-            throw new System.NotImplementedException();
+            var book = _context.Books.Find(editBookVm.Id);
+            book.Title = editBookVm.Title;
+            book.AuthorId = editBookVm.AuthorId;
+            try
+            {
+                _context.Books.Update(book);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("******* " + e.Message + " *******");
+                throw;
+            }
         }
 
         public void Delete(int id)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                var book = _context.Books.Find(id);
+                _context.Books.Remove(book);
+                _context.SaveChanges();
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("******* " + e.Message + " *******");
+                throw;
+            }
         }
     }
 }

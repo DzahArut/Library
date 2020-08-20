@@ -1,14 +1,15 @@
-﻿@model Library.ViewModels.CreateBookVM
+﻿@model Library.ViewModels.EditBookVM
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
     Layout = "_Layout";
 }
 <div class="card col-12">
     <div class="card-header">
-        Create
+        Edit
     </div>
-    <form asp-action="Create">
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="@Model.Id"/>
         <div class="form-group">
             <label asp-for="@Model.Title">Title</label>
             <input type="text" class="form-control" asp-for="@Model.Title">
@@ -21,7 +22,7 @@
         </div>
         <div class="card-footer">
             <div class="form-group">
-                <input class="btn btn-primary col-2" type="submit" value="Create"/>
+                <input class="btn btn-primary col-2" type="submit" value="Save"/>
             </div>
         </div>
     </form>

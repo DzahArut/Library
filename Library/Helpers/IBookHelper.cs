@@ -8,8 +8,9 @@ namespace Library.Controllers.Helpers
     {
         public List<BookVM> GetRange();
         
-        public CreateBookVM CreateBookVM();
-        public void Create(BookVM bookVM);
+        public CreateBookVM GetCreateBookVM();
+        public EditBookVM GetEditBookVM(int id);
+        public void Create(CreateBookVM bookVM);
         public void Edit(EditBookVM editBookVm);
         public void Delete(int id);
     }

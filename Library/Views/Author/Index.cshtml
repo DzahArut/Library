@@ -1,7 +1,7 @@
-﻿@model List<Library.ViewModels.BookVM>
+﻿@model List<Library.ViewModels.AuthorVMWithBookCount>
 
 @{
-    ViewBag.Title = "Books";
+    ViewBag.Title = "Authors";
     Layout = "_Layout";
 }
 @if (User.IsInRole("admin"))
@@ -14,8 +14,8 @@
    <thead>
        <tr>
          <th>#</th>
-         <th>Title</th>
-         <th>Author</th>
+         <th>FIO</th>
+         <th>Count of book</th>
          @if (User.IsInRole("admin"))
          {
            <th>Actions</th>
@@ -24,20 +24,20 @@
      </thead>
    <tbody>
    @{ int i = 0;}
-   @foreach (var b in Model)
+   @foreach (var a in Model)
    {
      i++;
      <tr>
        <th>@i</th>
-       <td>@b.Title</td>
-       <td>@b.Author</td>
+       <td>@a.Surname @a.Name @a.Patronymic</td>
+       <td>@a.BookCount</td>
         @if (User.IsInRole("admin"))
                 {
                   <td>
-                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@b.Id">
+                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@a.Id">
                       Edit
                     </a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@b.Id">
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@a.Id">
                       Delete
                     </a>
                   </td>
