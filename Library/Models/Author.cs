@@ -1,0 +1,23 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace Library.Models
+{
+    
+    /// <summary>
+    /// Author model
+    /// </summary>
+    public class Author
+    {
+        
+        //primary key  
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
+        public string Patronymic { get; set; }
+
+        
+        //Books one to many
+        public ICollection<Book> Books { get; set; }
+    }
+}
